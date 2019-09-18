@@ -36,20 +36,20 @@ CREATE TABLE pokemon (
     CONSTRAINT check_positive_hp CHECK(hp > 0),
     CONSTRAINT check_metodo_evolucion CHECK(metodo_evolucion IN ('nivel', 'item', 'intercambio')),
     CONSTRAINT fk_evoluciona_de FOREIGN KEY (evoluciona_de) REFERENCES pokemon(id)
-)
+);
 
 CREATE TABLE tipo (
     id INT PRIMARY KEY,
     nombre NVARCHAR2(4000) NOT NULL,
     CONSTRAINT check_positive_id CHECK( id > 0)
-)
+);
 
 CREATE TABLE tipo_efectivo_tipo (
     id_tipo1 INT,
     id_tipo2 INT,
     efectividad FLOAT,
     CONSTRAINT ids_pk PRIMARY KEY (id_tipo1, id_tipo2)
-)
+);
 
 CREATE TABLE Pokemon_Tipo (
     id_pokemon INT,
@@ -58,14 +58,14 @@ CREATE TABLE Pokemon_Tipo (
     CONSTRAINT pokemonTipo_pk PRIMARY KEY (id_pokemon, id_tipo1),
     CONSTRAINT fk_id_pokemon FOREIGN KEY (id_pokemon) REFERENCES pokemon(id),
     CONSTRAINT fk_id_tipo1 FOREIGN KEY (id_tipo1) REFERENCES tipo(id),
-    CONSTRAINT fk_id_tipo2 FOREIGN KEY (id_pokemon) REFERENCES tipo(id)
-)
+    CONSTRAINT fk_id_tipo2 FOREIGN KEY (id_tipo2) REFERENCES tipo(id)
+);
 
 CREATE TABLE Habilidad (
     id INT PRIMARY KEY,
     nombre NVARCHAR2(4000) NOT NULL,
     descripcion NVARCHAR2(4000) 
-)
+);
 
 CREATE TABLE Pokedex(
     id INT PRIMARY KEY, 
@@ -73,7 +73,7 @@ CREATE TABLE Pokedex(
     cantidad_obtenidos INT,
     CONSTRAINT check_positive_vistos CHECK(cantidad_vistos> 0),
     CONSTRAINT check_positive_obtenidos CHECK(cantidad_obtenidos > 0)
-)
+);
 
 CREATE TABLE Entrenador(
     id INT PRIMARY KEY, 
@@ -84,7 +84,7 @@ CREATE TABLE Entrenador(
     id_pokedex INT,
     CONSTRAINT fk_pokedex FOREIGN KEY (id_pokedex) REFERENCES Pokedex(id),
     CONSTRAINT check_positive_dinero CHECK(dinero> 0)
-)
+);
 
 CREATE TABLE Ataque(
     id INT PRIMARY KEY,
@@ -97,7 +97,7 @@ CREATE TABLE Ataque(
     id_tipo INT,
     CONSTRAINT check_categoria CHECK(categoria IN ('Ataque especial', 'Ataque físico')),
     CONSTRAINT fk_id_tipo FOREIGN KEY (id_tipo) REFERENCES tipo(id)
-)
+);
 --Duda que es fase?
 CREATE TABLE Resumen_Torneo(
     id_entrenador1 INT, 
@@ -110,7 +110,7 @@ CREATE TABLE Resumen_Torneo(
     CONSTRAINT fk_entrenador2 FOREIGN KEY (id_entrenador2) REFERENCES Entrenador(id),
     CONSTRAINT fk_ganador FOREIGN KEY (ganador) REFERENCES Entrenador(id),
     CONSTRAINT check_fase CHECK(fase IN ('Octavos', 'Cuartos', 'Semifinal', 'Final'))
-)
+);
 
 CREATE TABLE Equipo_Entrenador(
     id_entrenador INT, 
@@ -134,7 +134,7 @@ CREATE TABLE Equipo_Entrenador(
     CONSTRAINT check_positive_expActual CHECK ( exp_actual >= 0),
     CONSTRAINT check_positive_expNecesaria CHECK ( exp_necesaria >= 0),
     CONSTRAINT check_genero CHECK(genero IN ('M', 'F', 'N/A'))
-)
+);
 
 CREATE TABLE Batalla (
     id_batalla INT, 
@@ -155,4 +155,4 @@ CREATE TABLE Batalla (
     CONSTRAINT fk_entreGanador FOREIGN KEY (entrenador_ganador) REFERENCES Entrenador(id),
     CONSTRAINT check_positive_expGanada CHECK ( exp_ganada >= 0),
     CONSTRAINT check_positive_dineroGanado CHECK ( dinero_ganado >= 0)
-)
+);
