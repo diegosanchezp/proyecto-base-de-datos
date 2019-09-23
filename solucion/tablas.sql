@@ -13,7 +13,7 @@ CREATE TABLE child_table (
     FOREIGN KEY(col1, col2,...) REFERENCES parent_table(col1,col2) 
     ON DELETE [ CASCADE | SET NULL ]
 );
- CONSTRAINT check_positive_evoluciona_de CHECK(evoluciona_de > 0),
+ CONSTRAINT check_positive_evoluciona_de CHECK(evoluciona_de >= 0),
 */
 
 CREATE TABLE pokemon (
@@ -27,13 +27,13 @@ CREATE TABLE pokemon (
     velocidad INT,
     evoluciona_de INT,
     metodo_evolucion NVARCHAR2(4000),
-    CONSTRAINT check_positive_evoluciona_de CHECK(evoluciona_de > 0),
-    CONSTRAINT check_positive_velocidad CHECK(velocidad > 0),
-    CONSTRAINT check_positive_defensa_especial CHECK(defensa_especial > 0),
-    CONSTRAINT check_positive_ataque_especial CHECK(ataque_especial > 0),
-    CONSTRAINT check_positive_defensa CHECK(defensa > 0),
-    CONSTRAINT check_positive_ataque CHECK(ataque > 0),
-    CONSTRAINT check_positive_hp CHECK(hp > 0),
+    CONSTRAINT check_positive_evoluciona_de CHECK(evoluciona_de >= 0),
+    CONSTRAINT check_positive_velocidad CHECK(velocidad >= 0),
+    CONSTRAINT check_positive_defensa_especial CHECK(defensa_especial >= 0),
+    CONSTRAINT check_positive_ataque_especial CHECK(ataque_especial >= 0),
+    CONSTRAINT check_positive_defensa CHECK(defensa >= 0),
+    CONSTRAINT check_positive_ataque CHECK(ataque >= 0),
+    CONSTRAINT check_positive_hp CHECK(hp >= 0),
     CONSTRAINT check_metodo_evolucion CHECK(metodo_evolucion IN ('nivel', 'item', 'intercambio')),
     CONSTRAINT fk_evoluciona_de FOREIGN KEY (evoluciona_de) REFERENCES pokemon(id)
 );
@@ -41,7 +41,7 @@ CREATE TABLE pokemon (
 CREATE TABLE tipo (
     id INT PRIMARY KEY,
     nombre NVARCHAR2(4000) NOT NULL,
-    CONSTRAINT check_positive_id CHECK( id > 0)
+    CONSTRAINT check_positive_id CHECK( id >= 0)
 );
 
 CREATE TABLE tipo_efectivo_tipo (
@@ -71,8 +71,8 @@ CREATE TABLE Pokedex(
     id INT PRIMARY KEY, 
     cantidad_vistos INT,
     cantidad_obtenidos INT,
-    CONSTRAINT check_positive_vistos CHECK(cantidad_vistos> 0),
-    CONSTRAINT check_positive_obtenidos CHECK(cantidad_obtenidos > 0)
+    CONSTRAINT check_positive_vistos CHECK(cantidad_vistos>= 0),
+    CONSTRAINT check_positive_obtenidos CHECK(cantidad_obtenidos >= 0)
 );
 
 CREATE TABLE Entrenador(
@@ -83,7 +83,7 @@ CREATE TABLE Entrenador(
     fecha_inicio DATE, 
     id_pokedex INT,
     CONSTRAINT fk_pokedex FOREIGN KEY (id_pokedex) REFERENCES Pokedex(id),
-    CONSTRAINT check_positive_dinero CHECK(dinero> 0)
+    CONSTRAINT check_positive_dinero CHECK(dinero>= 0)
 );
 
 CREATE TABLE Ataque(
