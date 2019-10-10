@@ -50,3 +50,38 @@ END print_efectivo;
 /* Test procedure this way 
 exec print_efectivo(0,43);
  */
+
+/* Realice un trigger para actualizar de forma automática la información del torneo al terminar cada batalla.
+Éste debe actualizar el resumen del torneo con los resultados y el dinero del entrenador ganador. */
+CREATE OR REPLACE TRIGGER batalla_trigger
+AFTER  INSERT ON Batalla
+FOR EACH ROW
+--WHEN (New.dinero_ganado != null AND New.entrenador_ganador != null)
+DECLARE
+    pokemon_num Equipo_Entrenador.id_pokemon%TYPE;
+    phase VARCHAR(600);
+    current_date DATE;
+BEGIN
+    SELECT CURRENT_DATE INTO current_date FROM DUAL;
+    --Determine number of pokemon from winner trainer 
+    SELECT COUNT(EE.id_pokemon) INTO pokemon_num
+    FROM Equipo_Entrenador EE, Batalla B
+    WHERE EE.id_entrenador = B.entrenador_ganador;
+
+	--Determine battle phase
+    CASE pokemon_num
+    WHEN 3 THEN
+        phase := 'Octavos';
+    WHEN 4 THEN
+        phase := 'Cuartos';
+    WHEN 5 THEN
+        phase := 'Semifinal';
+    WHEN 6 THEN
+        phase := 'Final';
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Undefined');
+    END CASE;
+    DBMS_OUTPUT.PUT_LINE(phase);
+    --Insert battle summary
+    INSERT INTO Resumen_Torneo VALUES (:NEW.id_entrenador1,:NEW.id_entrenador2,phase, TO_DATE(current_date, 'dd/mm/yyyy'), :NEW.entrenador_ganador);
+END;
