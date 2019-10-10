@@ -60,6 +60,20 @@ INSERT INTO HABILIDAD VALUES (17, 'Flash Fire', 'Powers up the Pokémons Fire-ty
 INSERT INTO HABILIDAD VALUES (18, 'Forecast', 'The Pokémon transforms with the weather to change its type to Water, Fire, or Ice');
 INSERT INTO HABILIDAD VALUES (19, 'Guts', 'Boosts the Pokémons Attack stat when it has a status condition');
 
+/* Equipo_Entrenador: (id_entrenador, id_pokemon, genero, nivel, exp_actual, exp_necesaria,
+id_ataque1, id_ataque2, id_ataque3, id_ataque4, id_habilidad) */
+INSERT INTO Equipo_Entrenador VALUES (2, 7, 'M', 40, 100, 200, 10, 15, 84, 47, 6);
+INSERT INTO Equipo_Entrenador VALUES (2, 25, 'M', 50, 98, 100, 1, 2, 3, 4, 1);
+INSERT INTO Equipo_Entrenador VALUES (2, 1, 'M', 60, 102, 200, 5,6,7,8, 2);
+
+INSERT INTO Equipo_Entrenador VALUES (16, 150, 'M', 60, 102, 200, 9,10,11,12, 3);
+INSERT INTO Equipo_Entrenador VALUES (16, 89, 'M', 70, 99, 190, 13,14,15,16, 4);
+INSERT INTO Equipo_Entrenador VALUES (16, 33, 'M', 80, 202, 300, 17,18,19,20, 5);
+
+INSERT INTO Batalla VALUES (6, 2, 5, 16, 150, null, 400, 150, null);
+INSERT INTO Batalla VALUES (6, 2, 25, 16, 150, null, 520, 25, null);
+INSERT INTO Batalla VALUES (6, 2, 25, 16, 89, null, 280, 25, null);
+INSERT INTO Batalla VALUES (6, 2, 25, 16, 33, 4600.50, 100, 25, 2);
 
 
 
