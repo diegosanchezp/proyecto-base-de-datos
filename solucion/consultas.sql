@@ -21,13 +21,13 @@ CREATE OR REPLACE VIEW Prome AS
     SELECT AVG(dinero) as Promedio
     FROM Entrenador;
 
-SELECT E.nombre, E.dinero, Prom.Promedio
+SELECT E.nombre, E.dinero, Prom.Promedio, P.nombre
 FROM Entrenador E, Equipo_Entrenador T, Pokemon P, Prome Prom
-WHERE E.dinero > Prom.Promedio AND E.id = T.id_entrenador AND P.id = id.pokemon;
+WHERE E.dinero > Prom.Promedio AND E.id = T.id_entrenador AND P.id = T.id_pokemon;
 
 /* i) Imprima la información de las habilidades de los pokémon de los entrenadores de Valencia que
 iniciaron su viaje hace 4 años. (Al menos tres registros) */
 
 SELECT H.*
 FROM Equipo_Entrenador T, Entrenador E, Habilidad H, (SELECT CURRENT_DATE FROM DUAL)  D;
-WHERE T.id_entrenador = E.id AND E.pueblo_origen = 'Valencia' AND TO_DATE(D.CURRENT_DATE, 'dd/mm/yy') - TO_DATE(E.fecha_inicio, 'dd/mm/yy') >= 365*4;
+WHERE T.id_entrenador = E.id AND E.pueblo_origen = 'Valencia' AND T.id_habilidad = H.id AND TO_DATE(D.CURRENT_DATE, 'dd/mm/yy') - TO_DATE(E.fecha_inicio, 'dd/mm/yy') >= 365*4;
