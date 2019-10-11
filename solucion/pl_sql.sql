@@ -56,17 +56,17 @@ exec print_efectivo(0,43);
 CREATE OR REPLACE TRIGGER batalla_trigger
 AFTER  INSERT ON Batalla
 FOR EACH ROW
---WHEN (New.dinero_ganado != null AND New.entrenador_ganador != null)
+WHEN (New.dinero_ganado != null AND New.entrenador_ganador != null)
 DECLARE
     pokemon_num Equipo_Entrenador.id_pokemon%TYPE;
     phase VARCHAR(600);
     current_date DATE;
 BEGIN
     SELECT CURRENT_DATE INTO current_date FROM DUAL;
-    --Determine number of pokemon from winner trainer 
+    -- Determine number of pokemon from winner trainer 
     SELECT COUNT(EE.id_pokemon) INTO pokemon_num
-    FROM Equipo_Entrenador EE, Batalla B
-    WHERE EE.id_entrenador = B.entrenador_ganador;
+    FROM Equipo_Entrenador EE
+    WHERE EE.id_entrenador = :NEW.entrenador_ganador;
 
 	--Determine battle phase
     CASE pokemon_num
@@ -85,3 +85,4 @@ BEGIN
     --Insert battle summary
     INSERT INTO Resumen_Torneo VALUES (:NEW.id_entrenador1,:NEW.id_entrenador2,phase, TO_DATE(current_date, 'dd/mm/yyyy'), :NEW.entrenador_ganador);
 END;
+/
